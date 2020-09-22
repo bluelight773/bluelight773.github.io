@@ -1,3 +1,3 @@
-## Bluelight's Machine Learning Blog
+## The 773 Machine Learning Blog
 
-Welcome to Bluelight's Machine Learning Blog
+Welcome to The 773 Machine Learning Blog

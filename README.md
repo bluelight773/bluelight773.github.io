@@ -1,3 +1,8 @@
-# Your blog
+Hello and welcome to this blog.
+All pages on the blog, including this one, use [Markdown](https://guides.github.com/features/mastering-markdown/). You can include images:
 
-This is the repository for your blog! Click *_config.yml* above to get started and fill in the details. Then click *index.md* and edit it to start creating your home page.
+![Image of fast.ai logo](images/logo.png)
+
+## This is a title
+
+And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after index.md. 

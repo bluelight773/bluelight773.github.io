@@ -1,4 +1,4 @@
 # About
 
-This is where you put the contents of your *About* page. Like all your pages, it's in [Markdown](https://guides.github.com/features/mastering-markdown/) format.
+I'm a Kaggle Master and Machine Learning Engineer specializing in Deep Learning,  Natural Language Processing (NLP) and Computer Vision (CV).
 

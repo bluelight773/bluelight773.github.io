@@ -142,15 +142,85 @@ tensor([2, 2])
 tensor([0, 0])
 ~~~
 
+We won't attempt the one-dimensional array case as `axis=1` would be out of bands when there is only one dimension.
+
+## axis=-1
+Using `axis=-1` refer to using the last axis. Thus, in the two-dimensional array scenario, it's the same as using `axis=1`. We can also use `axis=-2` or more negative values to point to the 2nd last axis or an earlier axis.
+
+~~~python
+a_2d.sum(-1)
+~~~
+
+The output is:
+~~~python
+array([6, 15])
+~~~
+
+## Axis with 3D array
+Let's say we have a 3D array representing channels x height x width as is the typical ordering in pytorch. The array below is of the shape `(3, 2, 2)`.
+
+~~~python
+a_chw = array([
+         [[1, 2],
+          [3, 4]],
+         [[5, 6],
+          [7, 8]],
+         [[9, 10],
+          [11, 12]]
+        ])
+~~~
+
+Try to predict what the result will be if we use `axis=0`. This means collapsing the channels dimension as to have effectively one channel. We eliminate the channels dimension and so should end up with an array of shape `(2, 2)`, i.e., 2 rows x 2 columns. We would end up having the 1, 5, and 9 on top of one another; the 2, 6, and 10 on top of one another; the 3, 7, and 11 on top of one another; and the 4, 8, and 12 on top of one another. Thus, when applying `sum` with `axis=0`, we would expect to get the values 15, 18, 21, 24 in a 2x2 `array`. We effectively have one value per pixel.
+
+~~~python
+a_chw.sum(0)
+~~~
+
+The output is:
+~~~python
+array([[15, 18],
+       [21, 24]])
+~~~
+
+Try to predict what the result will be if we use `axis=1`. This means collapsing the rows dimension as to have effectively one row. We eliminate the height (rows) dimension and so should end up with an array of shape `(3, 2)`, i.e., 3 channels x 2 columns. We would effectively be summing the columns within each channel. We'd have the following pairs of values on top of one another: 1 and 3, 2 and 4, 5 and 7, 6 and 8, 9 and 11; and 10 and 12. The result would be the values 4, 6, 12, 14, 20, and 22 in a 3x2 `array`. We effectively have 3 channels per column.
+
+~~~python
+a_chw.sum(1)
+~~~
+
+The output is:
+~~~python
+array([[ 4,  6],
+       [12, 14],
+       [20, 22]])
+~~~
+
+Try to predict what the result will be if we use `axis=2`. This means collapsing the width (columns) dimension as to end up with an array of shape `(3, 2)`, i.e., 3 channels x 2 rows. We would effectively be summing the rows within each channel. We'd have the following pairs of values on top of one another: 1 and 2, 3 and 4, 5 and 6, 7 and 8, 9 and 10; and 11 and 12. The result would be the values 3, 7, 11, 15, 19, and 23 in a 3x2 `array`. We effectively have 3 channels per row.
+~~~python
+a_chw.sum(1)
+~~~
+
+The output is:
+~~~python
+array([[ 3,  7],
+       [11, 15],
+       [19, 23]])
+~~~
+
+More practically, we would be interested in computations that would ultimately give us just 3 values corresponding to the 3 channels. This could be achieved by collapsing both the height (rows) and the width (columns) axes, which we can do using `axis=(1, 2)` or alternatively using `axis=(-2, -1)`. By collapsing both the height (rows) and the width (columns), we'll be left with an array of shape `(3,)`, i.e., 3 channels. We'd effectively have the values within each channel all on top of one another: 1, 2, 3, and 4; 5, 6, 7, and 8; 9, 10, 11, and 12. The result would be the values 10, 26, and 42 in a one-dimensional array.
+
+~~~python
+a_chw.sum((-2, -1))
+~~~
+
+The output is:
+~~~python
+array([10, 26, 42])
+~~~
+
+Note that the use of `axis=(-2, -1))` may be preferable to using `axis=(1, 2)` in case we may be dealing with a 4-dimensional array of batch size x channels x height x width.
 
 <!--
-Can't apply axis=1 on 1D array
-Add appying axis=-1 in case of axis=1
-Work on 3D array
-a=np.array([
-            [(1,2,3), (4,5,6)],
-            [(7,8,9), (10,11,12)]
-           ])
 Provide multiple axes eg axis=(0,1) makes sense in the rowsxcolsxchannels example
 Work on stack
 -->

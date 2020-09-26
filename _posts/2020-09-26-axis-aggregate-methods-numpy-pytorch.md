@@ -1,14 +1,14 @@
-# Understanding the axis parameter when used for sum, mean, max, min, argmax, and argmin in numpy and pytorch
+# Understanding the axis parameter when used for aggregate methods (e.g., sum) in numpy and pytorch
 
-For newcomers to numpy and other data-science-related libraries, such as pytorch, the `axis` parameter can be a source of confusion. It may often appear to do something other than what one may intuitively expect. This blog is an attempt to demystify what it means and how to use it in the context of the methods `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`.
+For newcomers to numpy and other data-science-related libraries, such as pytorch, the `axis` parameter can be a source of confusion. It may often appear to do something other than what one may intuitively expect. This blog is an attempt to demystify what it means and how to use it in the context of aggregate methods, such as `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`.
 
 1. TOC
 {:toc}
 
 ## axis=0 with 1-2D Arrays
 
-The `axis` parameter works in a similar fashion when it comes to many common methods, such as `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`. Our focus here
-will be on `sum`, but what is stated regarding sum applies to the other methods mentioned here.
+The `axis` parameter works in a similar fashion when it comes to aggregate methods, such as `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`. Our focus here
+will be on `sum`, but what is stated regarding `sum` applies to the other aggregate methods.
 
 Let's start by forming 2x3 numpy `array`.
 
@@ -46,7 +46,7 @@ Thus, if we focus on the shapes of the arrays in question. If, as in the example
 
 Thus, in short, **summing with `axis=0` on a 2D array means summing the columns.**
 
-For completeness, we can apply the other computation methods and do using a variety of different ways.
+For completeness, we can apply other aggregate methods and do so using a variety of different ways.
 ~~~python
 print(a_2d.mean(0))
 print(a_2d.max(0))
@@ -118,7 +118,7 @@ array([6, 15])
 
 Thus, in short, **summing with `axis=0` on a 2D array means summing the rows.**
 
-For completeness, we can apply the other computation methods on a pytorch 2D `tensor`. It is worth noting that in pytorch, the parmeters `axis` and `dim` can be used interchangeably and that we need to use `float` (decimal) values rather than `long` (integer) values in order for the `mean` method to work. Thus, we convert `t_2d` into a `float` tensor.
+For completeness, we can apply the other aggregate methods on a pytorch 2D `tensor`. It is worth noting that in pytorch, the parmeters `axis` and `dim` can be used interchangeably and that we need to use `float` (decimal) values rather than `long` (integer) values in order for the `mean` method to work. Thus, we convert `t_2d` into a `float` tensor.
 ~~~python
 t_2d = tensor([[1, 2, 3],
                [4, 5, 6]]).float() 

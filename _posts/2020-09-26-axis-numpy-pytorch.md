@@ -1,11 +1,11 @@
-# Understanding the axis parameter in numpy and pytorch
+# Understanding the axis parameter when used for sum, mean, max, min, argmax, and argmin in numpy and pytorch
 
-For newcomers to numpy and other data-science-related libraries, such as pytorch, the `axis` parameter can be a source of confusion. It may often appear to do something other than what one may intuitively expect. This blog is an attempt to demystify what it means and how to use it.
+For newcomers to numpy and other data-science-related libraries, such as pytorch, the `axis` parameter can be a source of confusion. It may often appear to do something other than what one may intuitively expect. This blog is an attempt to demystify what it means and how to use it in the context of the methods `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`.
 
 1. TOC
 {:toc}
 
-## sum, mean, max, min, argmax, argmin with axis=0
+## axis=0 with 1-2D Arrays
 
 The `axis` parameter works in a similar fashion when it comes to many common methods, such as `sum`, `mean`, `max`, `min`, `argmax`, and `argmin`. Our focus here
 will be on `sum`, but what is stated regarding sum applies to the other methods mentioned here.
@@ -103,7 +103,7 @@ torch.Size([])
 We notice we get results analogous to what we had with numpy. The only difference is in the classes used to represent the inputs and outputs.
 
 
-## sum, mean, max, min, argmax, argmin with axis=1
+## axis=1 with 2D Arrays
 Now, let's say we set `axis=1`. Try and predict the result of the following before running the code.
 
 ~~~python
@@ -156,7 +156,7 @@ The output is:
 array([6, 15])
 ~~~
 
-## Axis with 3D array
+## 3-4D Arrays
 Let's say we have a 3D array representing channels x height x width as is the typical ordering in pytorch. The array below is of the shape `(3, 2, 2)`.
 
 ~~~python
@@ -221,6 +221,5 @@ array([10, 26, 42])
 Note that the use of `axis=(-2, -1))` may be preferable to using `axis=(1, 2)` in case we may be dealing with a 4-dimensional array of batch size x channels x height x width.
 
 <!--
-Provide multiple axes eg axis=(0,1) makes sense in the rowsxcolsxchannels example
-Work on stack
+May add tensorflow
 -->

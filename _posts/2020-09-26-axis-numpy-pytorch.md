@@ -142,3 +142,14 @@ tensor([2, 2])
 tensor([0, 0])
 ~~~
 
+
+<!--
+Can't apply axis=1 on 1D array
+Add appying axis=-1 in case of axis=1
+Work on 3D array
+a=np.array([
+            [(1,2,3), (4,5,6)],
+            [(7,8,9), (10,11,12)]
+           ])
+Work on stack
+-->

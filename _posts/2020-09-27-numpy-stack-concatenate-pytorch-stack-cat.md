@@ -47,7 +47,7 @@ tensor[[ 1,  2,  3],
        [10, 11, 12]])
 ~~~
 
-Another numpy equivalent to `concatenate` with `axis=0` is to use `vstack`. If we think of the 0th dimension as rows, then it makes sense to think of as `concatenate` with `axis=0` as vertically stacking.
+Alternatively, we can use `vstack` to vertically concatenate batches. There is no `vstack` in pytorch.
 
 ~~~python
 np.vstack((a_bf1, a_bf2))
@@ -61,9 +61,7 @@ array[[ 1,  2,  3],
       [10, 11, 12]])
 ~~~
 
-There is no `vstack` in pytorch.
-
-Note that this vertical stacking requires the arrays have the same number of columns, i.e., the 1st dimension should be of the same size so that the arrays can be placed on top of one another vertically.
+Note that this vertical stacking requires the arrays have the same number of columns, i.e., the 1st dimension should be of the same size so that the arrays can be placed on top of one another vertically. More generally, **vertical concatenation of batches requies all dimensions of the concatenated arrays to match aside from the 0th dimension along which the concatenation takes place.**
 
 ## Concatenation of batches horizontally using concatenate and axis=1
 
@@ -85,7 +83,8 @@ array([[1,  2,  5,  6,  7],
        [3,  4,  8,  9, 10]])
 ~~~
 
-The same could be achieved using pytorch's `cat` or using numpy's helper method, `hstack`. Pytorch has no `hstack` equivalent.
+The horizontal concatenation of batches can also be done using numpy's `hstack`.  Additionally, we can use pyotorch's `cat`, which works in the same way as numpy's `concatenate`.
+
 ~~~python
 print(np.hstack((a_bf1, a_bf2)))
 print(torch.cat((tensor(a_bf1), tensor(a_bf2)), dim=1))
@@ -98,7 +97,33 @@ tensor([[ 1,  2,  5,  6,  7],
         [ 3,  4,  8,  9, 10]])
 ~~~
 
-Note that this horizontal stacking requires the arrays have the same number of rows, i.e., the 0th dimension should be of the same size so that the arrays can be placed next to one another horizontally.
+Note that this horizontal stacking requires the arrays have the same number of rows, i.e., the 0th dimension should be of the same size so that the arrays can be placed next to one another horizontally. More generally, **horiontal concatenation of batches requies all dimensions of the concatenated arrays to match aside from the 1st dimension along which the concatenation takes place.**
+
+## Concatenation of instances horizontally using concatenate and axis=0
+
+Let's say we have the first 2 features for a given instance in one array, and its subsequent 3 features in another array and we wish to put them together.
+~~~python
+a_f1 = np.array([1, 2])
+a_f2 = np.array([3, 4, 5])
+~~~
+
+We effectively want to expand the 0th dimension (features) and so can use `concatenate` with `axis=0
+~~~python
+np.concatenate((a_f1, a_f2))
+~~~
+The output is an array of shape `(5,)`.
+~~~python
+array([1, 2, 3, 4, 5])
+~~~
+
+Alternatively, we can use numpy's `hstack` to carry out the horizontal concatenation.
+~~~python
+np.hstack((a_f1, a_f2))
+~~~
+We get the same output as with did with `concatenate`.
+~~~python
+array([1, 2, 3, 4, 5])
+~~~
 
 
 ## Stacking of instances vertically using stack and axis=0
@@ -150,9 +175,35 @@ array([[[[ 1,  2,  3],
          [34, 35, 36]]]])
 ~~~
 
-Alternatively, we can use pytorch's equivalent
+We can carry out the same type of transformation using pytorch's `stack`. 
+~~~python
+torch.stack((tensor(a_chw1), tensor(a_chw2)), 0)
+~~~
+The output is:
+~~~python
+tensor([[[[ 1,  2,  3],
+          [ 4,  5,  6]],
 
-## Stacking of instances horizontally using stack and axis=1
+         [[ 7,  8,  9],
+          [10, 11, 12]],
+
+         [[13, 14, 15],
+          [16, 17, 18]]],
+
+
+        [[[19, 20, 21],
+          [22, 23, 24]],
+
+         [[25, 26, 27],
+          [28, 29, 30]],
+
+         [[31, 32, 33],
+          [34, 35, 36]]]])
+~~~
+
+Note that this **stacking of instances (using `stack`) requires that the stacked arrays have the exact same shape** so that they could be stacked together.
+
+
 
 <!--
 pytorch stack with dim=0

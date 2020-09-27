@@ -17,7 +17,7 @@ a_bf2 = np.array([[7, 8, 9],
                   [10, 11, 12]])
 ~~~
 
-Now, let's say we want to join these 2 arrays as to form one array containing 4 rows. In this case, we already have a batch-size dimension and simply want to expand it from size 2 to size 4. For this scenario, we use `concatenate`. We specify `axis=0` since the batch dimension we want to concatenate along is the 0th dimension. The result is an array of shape 4 x 2. Note that we can apply the concatenation in any of the suggested approaches below.
+Now, let's say we want to join these 2 arrays as to form one array containing 4 rows. In this case, we already have a batch-size dimension and simply want to **expand this existing 0th dimension** from size 2 to size 4. For this scenario, we use `concatenate`. We specify `axis=0` since the batch dimension we want to concatenate along is the 0th dimension. The result is an array of shape 4 x 2. Note that we can apply the concatenation in any of the suggested approaches below.
 
 ~~~python
 a_cat1 = np.concatenate((a_bf1, a_bf2), axis=0)
@@ -75,7 +75,7 @@ a_bf2 = np.array([[5, 6, 7],
                   [8, 9, 10]])
 ~~~
 
-Let's say we want to concatenate these arrays as to have one array of shape number of batches (2) x number of features (5). In this scenario, we can use `concatenate` again, but with `axis=1`, since we want to concatenate along the 1st dimension (number of features).
+Let's say we want to concatenate these arrays as to have one array of shape number of batches (2) x number of features (5). In this scenario, we can use `concatenate` again, but with `axis=1`, since we want to concatenate along the 1st dimension (number of features), ie, we want to **expand the existing 1st dimension**.
 ~~~python
 np.concatenate((a_bf1, a_bf2), 1)
 ~~~
@@ -121,7 +121,7 @@ a_chw2 = np.array([[[19, 20, 21],
                     [34, 35, 36]]
                   ])
 ~~~
-To form the array containing the 2 images, we need to introduce a new dimension at the front corresponding to the number of images. To achieve this, we can use `stack` with `dim=0`, since we're introducing a new 0th dimension along which to stack the images. The `stack` function could be called in any of the listed approaches below.
+To form the array containing the 2 images, we need to **insert a new 0th dimension** at the front corresponding to the number of images. To achieve this, we can use `stack` with `axis=0`, since we're introducing a new 0th dimension along which to stack the images. The `stack` function could be called in any of the listed approaches below.
 ~~~python
 a_chw3 = np.stack((a_chw1, a_chw2), axis=0)
 a_chw3 = np.stack((a_chw1, a_chw2), 0)
@@ -150,8 +150,11 @@ array([[[[ 1,  2,  3],
          [34, 35, 36]]]])
 ~~~
 
+Alternatively, we can use pytorch's equivalent
+
 ## Stacking of instances horizontally using stack and axis=1
 
 <!--
-
+pytorch stack with dim=0
+Stacking instances horizontally with stack and axis=1
 -->

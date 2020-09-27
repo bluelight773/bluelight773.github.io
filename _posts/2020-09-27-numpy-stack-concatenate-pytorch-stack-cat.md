@@ -1,9 +1,11 @@
-# Understanding stack and concatenate
+# Understanding concatenate, stack, vstack, hstack
+
+If we want to put arrays together, we can typically do so using numpy's `concatenate`, `stack`, `vstack`, or `hstack`. In pytorch, we can use `cat` or `stack`.  `concatenate` or `cat` allow us to concatenate 2 or more arrays by expanding an existing dimension and require all other dimensions to match across the arrays. `stack` allows us to stack 2 or more arrays by inserting a new dimension and requires the arrays to have the same exact shape. `vstack` allows us to concatenate arrays vertically and requires all non-vertical dimensions to match across the arrays. `hstack` allows us to concatenate arrays horizontally and requires all non-horizontal dimensions to match across the arrays. For detailed examples, read below.
 
 1. TOC
 {:toc}
 
-## Concatenation of batches vertically using concatenate and axis=0
+## Concatenation of batches vertically using concatenate (cat) and axis=0 or vstack
 
 Concatenate can be used to join 2 or more arrays along an existing dimension.
 
@@ -63,7 +65,7 @@ array[[ 1,  2,  3],
 
 Note that this vertical stacking requires the arrays have the same number of columns, i.e., the 1st dimension should be of the same size so that the arrays can be placed on top of one another vertically. More generally, **vertical concatenation of batches requies all dimensions of the concatenated arrays to match aside from the 0th dimension along which the concatenation takes place.**
 
-## Concatenation of batches horizontally using concatenate and axis=1
+## Concatenation of batches horizontally using concatenate (cat) and axis=1 or hstack
 
 Let's say we have two arrays of number of batches x number of features with the first array containing the first 2 features, and the second containing the subsequent 3 features for the same rows.
 ~~~python
@@ -99,7 +101,7 @@ tensor([[ 1,  2,  5,  6,  7],
 
 Note that this horizontal stacking requires the arrays have the same number of rows, i.e., the 0th dimension should be of the same size so that the arrays can be placed next to one another horizontally. More generally, **horiontal concatenation of batches requies all dimensions of the concatenated arrays to match aside from the 1st dimension along which the concatenation takes place.**
 
-## Concatenation of instances horizontally using concatenate and axis=0
+## Concatenation of instance features horizontally using concatenate (cat) and axis=0 or hstack
 
 Let's say we have the first 2 features for a given instance in one array, and its subsequent 3 features in another array and we wish to put them together.
 ~~~python
@@ -202,10 +204,3 @@ tensor([[[[ 1,  2,  3],
 ~~~
 
 Note that this **stacking of instances (using `stack`) requires that the stacked arrays have the exact same shape** so that they could be stacked together.
-
-
-
-<!--
-pytorch stack with dim=0
-Stacking instances horizontally with stack and axis=1
--->

@@ -1,4 +1,4 @@
-# Understanding concatenate, stack, vstack, hstack
+# Understanding concatenate (cat), stack, vstack, hstack
 
 If we want to put arrays together, we can typically do so using numpy's `concatenate`, `stack`, `vstack`, or `hstack`. In pytorch, we can use `cat` or `stack`.  `concatenate` or `cat` allow us to concatenate 2 or more arrays by expanding an existing dimension and require all other dimensions to match across the arrays. `stack` allows us to stack 2 or more arrays by inserting a new dimension and requires the arrays to have the same exact shape. `vstack` allows us to concatenate arrays vertically and requires all non-vertical dimensions to match across the arrays. `hstack` allows us to concatenate arrays horizontally and requires all non-horizontal dimensions to match across the arrays. For detailed examples, read below.
 

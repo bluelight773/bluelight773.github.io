@@ -40,7 +40,7 @@ pip freeze > requirements.txt
 ~~~
 
 # Data
-To download the data, we'll use the [Download All Images Extension]{https://chrome.google.com/webstore/detail/download-all-images/ifipmflagepipjokmbdecpmjbibjnakm} for Google Chrome. Once installed, go to [Google Images]{https://images.google.com} and search for "Creative Commons License" images with the query `male faces`. Then use the extension to download a zip of the images. Extract the images then do an initial cleanup to remove bad images, such as cartoons or images that are not of male faces altogether.
+To download the data, we'll use the [Download All Images Extension](https://chrome.google.com/webstore/detail/download-all-images/ifipmflagepipjokmbdecpmjbibjnakm) for Google Chrome. Once installed, go to [Google Images]{https://images.google.com} and search for "Creative Commons License" images with the query `male faces`. Then use the extension to download a zip of the images. Extract the images then do an initial cleanup to remove bad images, such as cartoons or images that are not of male faces altogether.
 
 Repeat this process for `female faces`. Place the images in `data/male` and `data/female`, respectively. Ensure you have at least 100 images per category.
 
@@ -85,7 +85,7 @@ learn.fine_tune(4)
 ~~~
 
 I got around 4% error after all epochs are run. For more details on how the above code was arrived at after attempting different variations, check the
-[Jupyter Notebook]{https://github.com/bluelight773/image_classifier/blob/master/image_classifier.ipynb}
+[Jupyter Notebook](https://github.com/bluelight773/image_classifier/blob/master/image_classifier.ipynb)
 
 # Data Cleaning
 Let's delete bad images using the image cleaner. Run the following code from a notebook cell. Mark images to be deleted.

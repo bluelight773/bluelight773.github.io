@@ -85,7 +85,7 @@ learn.fine_tune(4)
 ~~~
 
 I got around 4% error after all epochs are run. For more details on how the above code was arrived at after attempting different variations, check the
-[Jupyter Notebook](https://github.com/bluelight773/image_classifier/blob/master/image_classifier.ipynb)
+[Jupyter Notebook](https://github.com/bluelight773/image_classifier/blob/master/image_classifier.ipynb).
 
 # Data Cleaning
 Let's delete bad images using the image cleaner. Run the following code from a notebook cell. Mark images to be deleted.

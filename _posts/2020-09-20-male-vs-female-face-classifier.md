@@ -1,4 +1,4 @@
-# Building an Male vs Female Face Classifier with FastAI
+# Building a Male vs Female Face Classifier with FastAI
 
 We'll go through all the steps of building an image classifier to distinguish male from female faces. This tutorial assumes one is using Ubuntu 18.04 LTS.
 

@@ -179,7 +179,7 @@ predicted_labels, prediceted_label_indices, pred_probs = learn_inf.predict("data
 print("Predicted Labels:", predicted_labels)
 ~~~
 
-## Make a Simple Web App
+# Make a Simple Web App
 
 Create a new notebook, `image_classifier_inference.ipynb` in which a simple UI is provided for uploading and labelling an image.
 

@@ -232,4 +232,10 @@ Upon trying out the inference web app and uploading images that don't contain an
 <!--
 mybinder
 Flask
+# Voila Web App Hosting
+mybinder.org
+https://github.com/bluelight773/image_classifier/
+/blob/master/image_classifier_inference.ipynb
+Maybe try /voila/render/image_classifier_inference.ipynb
+Maybe delete from requirements.txt pkg-resources==0.0.0
 -->

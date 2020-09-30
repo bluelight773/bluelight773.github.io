@@ -225,8 +225,11 @@ VBox([widgets.Label('Select an image'),
       btn_upload, btn_label, out_img, lbl_prediction])
 ~~~
 
+# Further Model Improvement
+
+Upon trying out the inference web app and uploading images that don't contain any faces, it's immediately apparent that we get a lot of false positives. That is, male faces and female faces are found when there are none. To combat this issue, we can create a new `misc` category that we can fill with images containing no faces. To start we can search Google images for `landscape` and download photos with Creative Commons Licenses using the extension as was done earlier. Then we can retrain a multilabel classification model. Given our focus is on identifying female faces and male faces, we can ignore predictions for `misc`, but including this data will better ensure we don't mistake images that don't have faces with ones that do. A few quick tests illustrated that this was in fact largely achieved. However, the model could still be much improved. Further improvement could be achieved by using more data for faces as well as more non-face data. Practically speaking, in a real-world scenario, we would want to train on photos similar to those that we expect to receive as input, be they ones including faces or ones that don't. Additionally, it's worth noting the data initially collected for the faces mostly only consisted of clean photos showing the face head-on and filling the image, so there is room for including photos where the faces are at an angle and take up a smaller portion of the image.
+
 <!--
 mybinder
 Flask
-Reduce false positives perhaps by having a misc/landscape category.
 -->

@@ -1,6 +1,9 @@
 # Building a Male vs Female Face Classifier and Web App with FastAI
 
-We'll go through all the steps of building an image classifier to distinguish male from female faces. This tutorial assumes one is using Ubuntu 18.04 LTS.
+We'll go through all the steps of building and improving an image classifier to distinguish male from female faces using FastAI, and even build a simple web app UI using Voila. This tutorial assumes one is using Ubuntu 18.04 LTS.
+
+1. TOC
+{:toc}
 
 # Virtual Environment setup
 Set up a virtual environment.
@@ -124,7 +127,7 @@ predicted_class, predicted_class_index, pred_probs = learn_inf.predict("data/mal
 print("Predicted Class:", predicted_class)
 ~~~
 
-# Building a MultiLabel Classification Problem
+# Building a MultiLabel Classification Model
 One issue with the model that we've built is that for any image, it'll always predict either male or female. However, we'd like to be able to take in
 images that contain neither a male face nor a female face and predict neither. To achieve this, we can frame the problem as a multi-label classification problem.
 

@@ -68,10 +68,10 @@ dls = faces.dataloaders(path)
 
 # Finetune an Imagenet-trained resnet18 model where once epoch is run with the last layer unfrozen, then the rest of the
 # network is unfrozen for 4 epochs.
-learn = cnn_learner(dls, resnet18, metrics=error_rate)
+learn = cnn_learner(dls, resnet18, metrics=accuracy)
 learn.fine_tune(4)
 ~~~
-I got around 6% error rate after all epochs are finished. Not bad for an initial few lines of code.
+I got around 94% accuracy rate after all epochs are finished. Not bad for an initial few lines of code.
 
 # Improving the Model with Augmentations
 
@@ -80,11 +80,11 @@ We apply data augmentations - Rotation, flipping, warping, brightness changes, a
 set_seed(42, True)
 faces = faces.new(item_tfms=Resize(128), batch_tfms=aug_transforms())
 dls = faces.dataloaders(path)
-learn = cnn_learner(dls, resnet18, metrics=error_rate)
+learn = cnn_learner(dls, resnet18, metrics=accuracy)
 learn.fine_tune(4)
 ~~~
 
-I got around 4% error after all epochs are run. For more details on how the above code was arrived at after attempting different variations, check the
+I got around 96% accuracy rate after all epochs are run. For more details on how the above code was arrived at after attempting different variations, check the
 [Jupyter Notebook](https://github.com/bluelight773/image_classifier/blob/master/image_classifier.ipynb).
 
 # Data Cleaning
@@ -109,26 +109,76 @@ Now that we've cleaned the data, let's train the model again and save it.
 set_seed(42, True)
 faces = faces.new(item_tfms=Resize(128), batch_tfms=aug_transforms())
 dls = faces.dataloaders(path)
-learn = cnn_learner(dls, resnet18, metrics=error_rate)
+learn = cnn_learner(dls, resnet18, metrics=accuracy)
 learn.fine_tune(4)
 
-# Save the model
-learn.export("image_classifier.pkl")
+# Save model
+model_path = Path("models")/"male_vs_female_face_classifier.pkl"
+learn.export(model_path)
 
 # Load and use the model
-path = Path()
-learn_inf = load_learner(path/'image_classifier.pkl')
+learn_inf = load_learner(model_path)
 print("Classes:", learn_inf.dls.vocab)
 predicted_class, predicted_class_index, pred_probs = learn_inf.predict("data/male/image.jpeg")
 print("Predicted Class:", predicted_class)
 ~~~
 
+# Building a MultiLabel Classification Problem
+One issue with the model that we've built is that for any image, it'll always predict either male or female. However, we'd like to be able to take in
+images that contain neither a male face nor a female face and predict neither. To achieve this, we can frame the problem as a multi-label classification problem.
 
+~~~python
+path = Path('data')
+
+# Ensure reproducibility of results
+set_seed(42, True)
+
+# To treat the problem as a multilabel classification problem, we provide y as a list
+# indicating all the applicable categories, if any.
+def get_y(file):
+    return [parent_label(file)]
+
+faces = DataBlock(
+    blocks=(ImageBlock, MultiCategoryBlock), 
+    get_items=get_image_files, 
+    splitter=RandomSplitter(valid_pct=0.2, seed=42),
+    get_y=get_y,
+    item_tfms=Resize(128), batch_tfms=aug_transforms())
+
+dls = faces.dataloaders(path)
+
+# We use multi-accuracy which computes the accuracy rate across labels
+learn = cnn_learner(dls, resnet18, metrics=accuracy_multi)
+learn.fine_tune(4)
+~~~
+We get 94% multi-accuracy rate.
+
+Let's attempt to improve the model using the learning-rate finder.
+
+~~~python
+lr_candidates = learn.lr_find()
+learn.fine_tune(4, lr_candidates.lr_steep)
+~~~
+Our accuracy decreased slightly to 93% but we'll stick with this model as we were more methodical in the learning-rate selection.
+
+Let's save this model so that it can be used in a simple classifier web app that we'll build in the next section.
+
+~~~python
+# Save model
+model_path = Path("models")/"male_vs_female_face_classifier.pkl"
+learn.export(model_path)
+
+# Load and use the model
+learn_inf = load_learner(model_path)
+print("Labels:", learn_inf.dls.vocab)
+predicted_labels, prediceted_label_indices, pred_probs = learn_inf.predict("data/male/image.jpeg")
+print("Predicted Labels:", predicted_labels)
+~~~
 
 <!--
 XApply Data Augmentation
 XSave model
 XLoad model
 Voila
-MultiCategory
+XMultiCategory
 -->

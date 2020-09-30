@@ -176,9 +176,5 @@ print("Predicted Labels:", predicted_labels)
 ~~~
 
 <!--
-XApply Data Augmentation
-XSave model
-XLoad model
 Voila
-XMultiCategory
 -->

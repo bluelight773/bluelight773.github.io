@@ -1,4 +1,4 @@
-# Building a Male vs Female Face Classifier with FastAI
+# Building a Male vs Female Face Classifier and Web App with FastAI
 
 We'll go through all the steps of building an image classifier to distinguish male from female faces. This tutorial assumes one is using Ubuntu 18.04 LTS.
 
@@ -27,6 +27,7 @@ Create requirements.txt.
 wheel
 jupyter==1.0.0
 fastai==2.0.13
+voila==0.2.3
 ~~~
 
 Install requirements.
@@ -175,6 +176,54 @@ predicted_labels, prediceted_label_indices, pred_probs = learn_inf.predict("data
 print("Predicted Labels:", predicted_labels)
 ~~~
 
+## Make a Simple Web App
+
+Create a new notebook, `image_classifier_inference.ipynb` in which a simple UI is provided for uploading and labelling an image.
+
+We will rely on Voila library to create a simple web app right out of the Jupyter notebook.
+
+~~~python
+# Restart the Jupyter server and look for a "Voila" button at the top. If you don't see it, run the following line to ensure
+# Voila is enabled, then restart the Jupyter server.
+# Once Voila has been enabled, comment out the line below. Clicking on the Voila button should load up this notebook, run all the cells
+# but only show the output (rather than the code). The result should be to have a simple web app to which we can upload and label images.
+!jupyter serverextension enable voila —sys-prefix
+
+from fastai.vision.all import *
+from fastai.vision.widgets import *
+
+# Due to an issue with fastai's export, we need to provide the get_y function, get_y_label
+# when loading the model to ensure we can use it.
+def get_y_labels(file):
+    return [parent_label(file)]
+
+# Load model
+model_path = Path("models")/"male_vs_female_face_classifier.pkl"
+learn_inf = load_learner(model_path)
+
+# Set up UI widgets: Upload button, Label button, Output area to show image, Label to show prediction
+btn_upload = widgets.FileUpload()
+btn_label = widgets.Button(description="Label")
+out_img = widgets.Output()
+lbl_prediction = widgets.Label()
+
+# "Label" button callback
+def on_click_label(change):
+    img = PILImage.create(btn_upload.data[-1])
+    out_img.clear_output()
+    with out_img: display(img.to_thumb(128,128))
+    labels, pred_labels_mask, pred_probs = learn_inf.predict(img)
+    lbl_prediction.value = f'Prediction: {labels}, Probabilities: {pred_probs}'
+
+btn_label.on_click(on_click_label)
+
+# Show the vertically-aligned UI
+VBox([widgets.Label('Select an image'), 
+      btn_upload, btn_label, out_img, lbl_prediction])
+~~~
+
 <!--
-Voila
+mybinder
+Flask
+Reduce false positives perhaps by having a misc/landscape category.
 -->

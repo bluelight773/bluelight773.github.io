@@ -1,6 +1,6 @@
 # Building a Male vs Female Face Classifier and Web App with FastAI
 
-We'll go through all the steps of building and improving an image classifier to distinguish male from female faces using FastAI, and even build a simple web app UI using Voila. This tutorial assumes one is using Ubuntu 18.04 LTS.
+We'll go through all the steps of building and improving an image classifier to distinguish male from female faces using FastAI, and even build a simple web app UI using Voila. This tutorial assumes one is using Ubuntu 18.04 LTS. The corresponding code repository can be found [here](https://github.com/bluelight773/image_classifier).
 
 1. TOC
 {:toc}

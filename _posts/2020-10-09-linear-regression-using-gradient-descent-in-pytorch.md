@@ -70,7 +70,7 @@ lr = 1e-5
 opt = SGD(model.parameters(), lr)
 ~~~
 
-## Epoch Loop
+## Write the Epochs Loop
 We can iterate on 100 epochs where each epoch consists of iterating through all the batches. With each batch, we compute the predictions, the loss, the gradients, and then we update the parameters and zero the gradients. 
 ~~~python
 for epoch in range(1, 101):
@@ -94,7 +94,7 @@ for epoch in range(1, 101):
     print("Epoch {}: Loss: {:.2f}".format(epoch, loss.item()))
 ~~~
 
-## Putting it Altogether
+## Put it Altogether
 We notice that loss appears as `nan` or `inf` suggesting the learning rate may be too large. Thus, we try a smaller learning rate, such as `lr = 1e-7`, set a manual seed for reproduciblity, and put all the code together. The result is a model with a loss of about `89` corresponding to being off by about `9` on average. 
 ~~~python
 import pandas as pd

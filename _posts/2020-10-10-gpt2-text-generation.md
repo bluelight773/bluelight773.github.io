@@ -1,20 +1,21 @@
-# In-Progress: Story Generation
+# GPT2 Text Generation
 
-## Transformers Initial Story
+The `transformers` library allows you to easily generate text using a GPT2 model.
 
+1. Installation
 ~~~bash
 pip install transformers
 ~~~
 
+2. Code
 ~~~python
 from transformers import pipeline, set_seed
 generator = pipeline('text-generation', model='gpt2')
 set_seed(42)
 generator("Once upon a time,", min_length=500, max_length=1000, num_return_sequences=5)
-
 ~~~
 
-An intial story. Spelling is fine, grammar is mostly fine, but story is not fully coherent. Result seems influenced by promotional content. Perhaps we can train on short stories.
+Sample text:
 ~~~
 Once upon a time, I didn't want to work with him."
 

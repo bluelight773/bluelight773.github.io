@@ -74,7 +74,8 @@ def evaluate(model, dl):
         batch_sizes.append(len(xb))
         accuracies.append(accuracy(logits, yb))
 
-      batch_sizes, losses, accuracies = tensor(batch_sizes, dtype=torch.float), tensor(losses, dtype=torch.float), tensor(accuracies, dtype=torch.float)
+      batch_sizes = tensor(batch_sizes, dtype=torch.float)
+      losses, accuracies = tensor(losses, dtype=torch.float), tensor(accuracies, dtype=torch.float)
       total = torch.sum(batch_sizes)
       loss = torch.sum(losses * (batch_sizes / total)).item()
       acc = torch.sum(accuracies * (batch_sizes / total)).item()

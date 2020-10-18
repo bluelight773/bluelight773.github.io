@@ -61,9 +61,8 @@ from torch import tensor
 
 def accuracy(logits, labels):
   _, pred_labels = torch.max(logits, 1)
-  # It's not necessary, but we wrap value below in a tensor so that it's consistent with
-  # cross_entropy (since that returns a tensor)
-  return torch.tensor(torch.sum(pred_labels == labels).item() / len(labels))
+  # Though it's not necessary to return a tensor, this does so consistently with cross_entropy
+  return torch.sum(pred_labels == labels).float() / len(labels)
 
 # For evaluating loss and accuracy on validation and test datasets
 def evaluate(model, dl):

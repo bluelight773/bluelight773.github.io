@@ -1,4 +1,4 @@
-# MNIST Logistic Regression Using PyTorch
+# Logistic Regression Using PyTorch
 
 We'll apply Logistic Regression on the MNIST dataset. This means we'll have one weight parameter per pixel and one bias parameter per output (class).
 

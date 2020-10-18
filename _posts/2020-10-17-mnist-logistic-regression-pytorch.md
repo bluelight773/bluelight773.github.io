@@ -61,7 +61,7 @@ from torch import tensor
 
 def accuracy(logits, labels):
   _, pred_labels = torch.max(logits, 1)
-  # Though it's not necessary to return a tensor, this does so consistently with cross_entropy
+  # Though it's not necessary to return a tensor, this does so staying consistent with cross_entropy
   return torch.sum(pred_labels == labels).float() / len(labels)
 
 # For evaluating loss and accuracy on validation and test datasets
@@ -76,8 +76,8 @@ def evaluate(model, dl):
       batch_sizes.append(len(xb))
       accuracies.append(accuracy(logits, yb))
 
+    losses, accuracies = tensor(losses), tensor(accuracies)
     batch_sizes = tensor(batch_sizes, dtype=torch.float)
-    losses, accuracies = tensor(losses, dtype=torch.float), tensor(accuracies, dtype=torch.float)
     total = torch.sum(batch_sizes)
     loss = torch.sum(losses * (batch_sizes / total)).item()
     acc = torch.sum(accuracies * (batch_sizes / total)).item()
